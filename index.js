@@ -1,7 +1,10 @@
 const express = require('express')
+const requireDir = require('require-dir')
+const controllers = requireDir('./controllers')
 // const pug = require('pug')
-const app = express()
 const bodyParser = require('body-parser')
+
+const app = express()
 
 app.set('view engine', 'pug')
 // app.use(express.static('./public'))
@@ -15,20 +18,11 @@ app.get('/', (req, res) => {
   res.render('appointment', { title: 'Hey', message: 'Hello there!' })
 })
 
-app.get('/admin/config', (req, res) => {
-  res.render('admin/config', {
-    weekdays: ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom']
-  })
-})
-app.post('/admin/config', (req, res) => {
-  console.log(req.body)
-})
+app.route('/admin/config')
+  .get(controllers.admin.config.get)
+  .post(controllers.admin.config.post)
 
-app.post('/changeTimes', (req, res) => {
-  console.log('time changed!')
-})
-
-const server = app.listen(process.env.PORT = 3000, function () {
+const server = app.listen(process.env.PORT = 3000, () => {
   const port = server.address().port
   console.log('Node server listening on port', port)
 })

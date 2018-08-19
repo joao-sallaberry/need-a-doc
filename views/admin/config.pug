@@ -17,31 +17,47 @@ html
 
 
         script.
-            let rowCount = 1
+            let rowCount = 0
 
-            function addFormRow() {
-                rowCount++
+            function addFormRow(weekday=null, startTime=null, endTime=null) {
+              rowCount++
 
-                // create form row
-                const rowDiv = document.createElement('div')
-                rowDiv.setAttribute('class', `form-group remove-class${rowCount}`)
-                rowDiv.appendChild(document.getElementById('form-inputs').cloneNode(true))
+              // create form row
+              const rowDiv = document.createElement('div')
+              rowDiv.setAttribute('class', `form-group remove-class${rowCount}`)
+              rowDiv.appendChild(document.getElementById('form-inputs').cloneNode(true))
 
-                // replace + to - button
-                const removeButton = `<button class="btn btn-danger" type="button" onclick="removeFormRow(${rowCount})">
+              // set defaults
+              if (weekday) setDefaultOption(rowDiv, 'weekday-select', weekday)
+              if (startTime) setDefaultOption(rowDiv, 'start-time-select', startTime)
+              if (endTime) setDefaultOption(rowDiv, 'end-time-select', endTime)
+
+              // replace + to - button
+              const removeButton = `<button class="btn btn-danger" type="button" onclick="removeFormRow(${rowCount})">
                                         <span class="fa fa-minus" aria-hidden="true"></span>
                                     </button>
                                     <div class="clear"></div>`
-                rowDiv.getElementsByClassName('input-group-btn')[0].innerHTML = removeButton
+              rowDiv.getElementsByClassName('input-group-btn')[0].innerHTML = removeButton
 
-                const objTo = document.getElementById('form-rows')
-                objTo.appendChild(rowDiv)
+              // append row
+              const objTo = document.getElementById('form-rows')
+              objTo.appendChild(rowDiv)
             }
 
             function removeFormRow(rid) {
-                const element = document.getElementsByClassName(`remove-class${rid}`)[0]
-                element.parentNode.removeChild(element)
+              const element = document.getElementsByClassName(`remove-class${rid}`)[0]
+              element.parentNode.removeChild(element)
             }
+
+            function setDefaultOption(rowDiv, selectClass, defaultOption) {
+              const el = rowDiv.getElementsByClassName(selectClass)[0]
+              for (let i = 0; i < el.children.length; i++) {
+                const option = el.children[i]
+                if (option.getAttribute('value') === defaultOption)
+                  option.setAttribute('selected', true)
+              }
+            }
+
 
         body
             div.card.panel-default
@@ -50,45 +66,55 @@ html
                 .card-header Horários Disponíveis
                 .card-body
 
-                    form(action='/test' method='POST')
+                    form(action='/admin/config' method='POST')
                         #form-rows
 
-                        #form-inputs
-                            .row
+                        .remove-class0
+                            #form-inputs
+                                .row
+                                    .col-sm-3.nopadding
+                                        .form-group
+                                            .input-group
+                                                select.form-control.weekday-select(name='weekday')
+                                                     each d in weekdays
+                                                         option(value=d)
+                                                             =d
 
-                                .col-sm-3.nopadding
-                                    .form-group
-                                        .input-group
-                                            select.form-control#weekday(name='weekday')
-                                                each d in weekdays
-                                                    option(value=d)
-                                                        =d
+                                    .col-sm-3.nopadding
+                                        .form-group
+                                            .input-group
+                                                select.form-control.start-time-select(name='startTime')
+                                                    each d in times
+                                                        option(value=d)
+                                                            =d
 
-                                .col-sm-3.nopadding
-                                    .form-group
-                                        .input-group
-                                            select.form-control#firstTime(name='firstTime')
-                                                - const times = ['00:00', '01:00', '23:30']
-                                                each d in times
-                                                    option(value=d)
-                                                        =d
+                                    .col-sm-3.nopadding
+                                        .form-group
+                                            .input-group
+                                                select.form-control.end-time-select(name='endTime')
+                                                    each d in times
+                                                        option(value=d)
+                                                            =d
 
-                                .col-sm-3.nopadding
-                                    .form-group
-                                        .input-group
-                                            select.form-control#lastTime(name='lastTime')
-                                                each d in times
-                                                    option(value=d)
-                                                        =d
+                                    .input-group-btn
 
-                                .input-group-btn
-                                    button.btn.btn-success(type="button" onclick="addFormRow()")
-                                        span.fa.fa-plus(aria-hidden='true')
-
-
-                        button.btn.btn-primary(type='submit') Atualizar horários
+                        .row
+                            .col-1
+                                button.btn.btn-success(type="button" onclick="addFormRow()")
+                                    span.fa.fa-plus(aria-hidden='true')
+                            .col-2
+                                a.btn.btn-danger(href='/admin/config') Descartar modificações
+                            .col-2
+                                button.col.btn.btn-primary(type='submit') Atualizar horários
 
                 .card-footer
                     small Press + to add another form field, press - to remove form field :)
 
-// inspired by https://bootsnipp.com/snippets/AXVrV
+
+        // show current time slots
+        each slot in timeSlots
+          script.
+            addFormRow('#{slot.weekday}', '#{slot.startTime}', '#{slot.endTime}')
+
+        script.
+          removeFormRow(0)

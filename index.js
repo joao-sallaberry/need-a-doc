@@ -1,10 +1,14 @@
-const express = require('express')
 const requireDir = require('require-dir')
-const controllers = requireDir('./controllers')
 // const pug = require('pug')
+
+const express = require('express')
+const app = express()
 const bodyParser = require('body-parser')
 
-const app = express()
+const controllers = requireDir('./controllers')
+
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/need-a-doc', { useNewUrlParser: true })
 
 app.set('view engine', 'pug')
 // app.use(express.static('./public'))

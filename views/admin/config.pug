@@ -108,7 +108,11 @@ html
                                 button.col.btn.btn-primary(type='submit') Atualizar horários
 
                 .card-footer
-                    small Press + to add another form field, press - to remove form field :)
+                    if answer
+                        if answer.error
+                            p.text-danger #{answer.message}
+                        else
+                            p.text-primary #{answer.message}
 
 
         // show current time slots

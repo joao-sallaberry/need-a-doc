@@ -1,21 +1,52 @@
+const TimeSlot = require('../models/timeSlot')
 
 module.exports = {
   config: {
     get: (req, res) => {
-      res.render('admin/config', {
-        timeSlots: [
-          { weekday: 'seg', startTime: '09:00', endTime: '17:00' },
-          { weekday: 'qua', startTime: '09:00', endTime: '17:30' },
-          { weekday: 'sex', startTime: '10:00', endTime: '18:00' }
-        ],
-        weekdays: ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'],
-        times: getPossibleTimes()
-      })
+      renderConfigView(res)
     },
     post: (req, res) => {
-      console.log('post config', req.body)
+      // TODO: validate
+      const { weekday, startTime, endTime } = req.body
+      const len = weekday.length
+
+      // make list of slots
+      const slots = []
+      for (let i = 0; i < len; i++) {
+        slots.push({
+          weekday: weekday[i],
+          startTime: startTime[i],
+          endTime: endTime[i]
+        })
+      }
+
+      // update database
+      TimeSlot.updateAll(slots)
+        .then(() => renderConfigView(res, {
+          answer: { message: 'Horários atualizados!' }
+        }))
+        .catch(err => renderConfigView(res, {
+          answer: {
+            error: err, message: 'Erro ao configurar horários'
+          }}))
     }
   }
+}
+
+function renderConfigView (res, options = {}) {
+  TimeSlot.findAll()
+    .then(slots => {
+      res.render('admin/config', {
+        timeSlots: slots,
+        weekdays: ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'],
+        times: getPossibleTimes(),
+        ...options
+      })
+    })
+    .catch(err => renderConfigView(res, {
+      answer: {
+        error: err, message: 'Erro ao obter horários'
+      }}))
 }
 
 function getPossibleTimes () {

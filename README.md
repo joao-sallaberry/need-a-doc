@@ -7,6 +7,7 @@ Pages
 -----
 
 `/appointment` - make an appointment
+
 `/admin` - see timetable and set available time slots
 
 Run locally
@@ -18,7 +19,7 @@ Run locally
 
 [yarn](https://yarnpkg.com/) 1.2.1 or superior
 
-[mongoDB](https://www.mongodb.com/)
+[mongoDB](https://www.mongodb.com/) 2.6.10 or superior
 
 ### Setup
 
@@ -31,6 +32,8 @@ yarn
 ```
 
 ### Run
+
+Go to project directory and run:
 
 ```bash
 yarn run app

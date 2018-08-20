@@ -25,12 +25,14 @@ html
               // create form row
               const rowDiv = document.createElement('div')
               rowDiv.setAttribute('class', `form-group remove-class${rowCount}`)
-              rowDiv.appendChild(document.getElementById('form-inputs').cloneNode(true))
+              const newRow = document.getElementById('form-inputs').cloneNode(true)
+              newRow.removeAttribute('hidden')
+              rowDiv.appendChild(newRow)
 
               // set defaults
-              if (weekday) setDefaultOption(rowDiv, 'weekday-select', weekday)
-              if (startTime) setDefaultOption(rowDiv, 'start-time-select', startTime)
-              if (endTime) setDefaultOption(rowDiv, 'end-time-select', endTime)
+              setInput(rowDiv, 'weekday-select', weekday)
+              setInput(rowDiv, 'start-time-select', startTime)
+              setInput(rowDiv, 'end-time-select', endTime)
 
               // replace + to - button
               const removeButton = `<button class="btn btn-danger" type="button" onclick="removeFormRow(${rowCount})">
@@ -49,12 +51,17 @@ html
               element.parentNode.removeChild(element)
             }
 
-            function setDefaultOption(rowDiv, selectClass, defaultOption) {
+            function setInput(rowDiv, selectClass, defaultOption) {
               const el = rowDiv.getElementsByClassName(selectClass)[0]
-              for (let i = 0; i < el.children.length; i++) {
-                const option = el.children[i]
-                if (option.getAttribute('value') === defaultOption)
-                  option.setAttribute('selected', true)
+              el.removeAttribute('disabled')
+
+              // set default value
+              if (defaultOption !== null) {
+                for (let i = 0; i < el.children.length; i++) {
+                  const option = el.children[i]
+                  if (option.getAttribute('value') === defaultOption)
+                    option.setAttribute('selected', true)
+                }
               }
             }
 
@@ -73,12 +80,12 @@ html
                         #form-rows
 
                         .remove-class0
-                            #form-inputs
+                            #form-inputs(hidden)
                                 .row
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
-                                                select.form-control.weekday-select(name='weekday')
+                                                select.form-control.weekday-select(name='weekday' disabled)
                                                      each d, index in weekdays
                                                          option(value=index)
                                                              =d
@@ -86,7 +93,7 @@ html
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
-                                                select.form-control.start-time-select(name='startTime')
+                                                select.form-control.start-time-select(name='startTime' disabled)
                                                     each t in times
                                                         option(value=t)
                                                             =t
@@ -94,7 +101,7 @@ html
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
-                                                select.form-control.end-time-select(name='endTime')
+                                                select.form-control.end-time-select(name='endTime' disabled)
                                                     each t in times
                                                         option(value=t)
                                                             =t
@@ -122,6 +129,3 @@ html
         each slot in timeSlots
           script.
             addFormRow('#{slot.weekday}', '#{slot.startTime}', '#{slot.endTime}')
-
-        script.
-          removeFormRow(0)

@@ -19,7 +19,7 @@ Run locally
 
 [yarn](https://yarnpkg.com/) 1.2.1 or superior
 
-[mongoDB](https://www.mongodb.com/) 2.6.10 or superior
+[mongoDB](https://www.mongodb.com/) 3.2.20 or superior
 
 ### Setup
 

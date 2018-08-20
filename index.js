@@ -7,7 +7,8 @@ const bodyParser = require('body-parser')
 const controllers = requireDir('./controllers')
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/need-a-doc', { useNewUrlParser: true })
+const config = require('./config/config')
+mongoose.connect(config.mongo.url, { useNewUrlParser: true })
 
 app.set('view engine', 'pug')
 // app.use(express.static('./public'))

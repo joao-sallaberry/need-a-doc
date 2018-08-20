@@ -1,7 +1,13 @@
 need-a-doc
 ==========
 
-Medical system for making and managing appointments
+Medical system for making and managing appointments. Appointments are 30-minute long.
+
+Pages
+-----
+
+`/appointment` - make an appointment
+`/admin` - see timetable and set available time slots
 
 Run locally
 -----------
@@ -14,7 +20,7 @@ Run locally
 
 [mongoDB](https://www.mongodb.com/)
 
-### Local Setup
+### Setup
 
 Create a database named `need-a-doc`
 
@@ -33,6 +39,8 @@ yarn run app
 TODOs
 -----
 
+- Check if start time is before end time on admin/config
+- Forbid 2 appointments at the same time when making an appointment
 - Confirmation modal when leaving admin/config view with unsaved changes
 - Confirmation modal for sensitive actions
 - Backend validation before writing to DB

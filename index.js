@@ -1,5 +1,4 @@
 const requireDir = require('require-dir')
-// const pug = require('pug')
 
 const express = require('express')
 const app = express()
@@ -26,6 +25,13 @@ app.route('/appointment')
 
 app.route('/appointment/time')
   .post(controllers.appointment.time.post)
+
+app.get('/admin', (req, res) => {
+  res.redirect('/admin/timetable')
+})
+
+app.route('/admin/timetable')
+  .get(controllers.admin.timetable.get)
 
 app.route('/admin/config')
   .get(controllers.admin.config.get)

@@ -1,4 +1,5 @@
 const TimeSlot = require('../models/timeSlot')
+const Appointment = require('../models/appointment')
 const dateTime = require('../utils/dateTime')
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
     },
     post: (req, res) => {
       // TODO: validate
-      const { weekday, startTime, endTime } = req.body
+      const {weekday, startTime, endTime} = req.body
       const len = weekday.length
 
       // make list of slots
@@ -27,12 +28,22 @@ module.exports = {
       // update database
       TimeSlot.updateAll(slots)
         .then(() => renderConfigView(res, {
-          answer: { message: 'Horários atualizados!' }
+          answer: {message: 'Horários atualizados!'}
         }))
         .catch(err => renderConfigView(res, {
           answer: {
             error: err, message: 'Erro ao configurar horários'
-          }}))
+          }
+        }))
+    }
+  },
+  timetable: {
+    get: (req, res) => {
+      Appointment.find({})
+        .then(appointments => {
+          appointments = appointments.sort((a, b) => a.date - b.date) // sort by date
+          res.render('admin/timetable', { appointments })
+        })
     }
   }
 }

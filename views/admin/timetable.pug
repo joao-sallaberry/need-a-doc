@@ -1,0 +1,31 @@
+html
+    head
+        title Configurações
+        link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
+        integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'
+        rel='stylesheet'
+        id='bootstrap-css'
+        crossorigin='anonymous')
+
+        body
+            .card.panel-default
+                .card-header
+                    h3 Need a Doc - Administrador
+                .card-header
+                    .row
+                        .col-sm-2 Agenda
+                        a.col-sm-2(href='/admin/config') Configurar Horários
+                .card-body
+                    table.table.table-striped
+                        tr
+                            th Dia/Horário
+                            th Nome
+                            th Email
+                            th Telefone
+
+                        each app in appointments
+                            tr
+                                td #{app.date}
+                                td #{app.name}
+                                td #{app.email}
+                                td #{app.phone}

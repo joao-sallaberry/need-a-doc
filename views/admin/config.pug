@@ -63,7 +63,10 @@ html
             .card.panel-default
                 .card-header
                     h3 Need a Doc - Administrador
-                .card-header Horários Disponíveis
+                .card-header
+                    .row
+                        a.col-sm-2(href='/admin/timetable') Agenda
+                        .col-sm-2 Configurar Horários
                 .card-body
 
                     form(action='/admin/config' method='POST')

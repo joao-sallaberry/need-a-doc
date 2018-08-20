@@ -47,7 +47,7 @@ module.exports = {
         .then(() => res.render('appointment/final', { message: 'Horário agendado com sucesso!' }))
         .catch(err => {
           console.error(err)
-          res.render('appointment/final', { message: 'Erro ao cadastrar agendamento', error: err})
+          res.render('appointment/final', { message: 'Erro ao cadastrar agendamento', error: err })
         })
     }
   }

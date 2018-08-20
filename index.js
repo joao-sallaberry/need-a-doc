@@ -38,9 +38,10 @@ app.route('/admin/config')
   .get(controllers.admin.config.get)
   .post(controllers.admin.config.post)
 
-const server = app.listen(process.env.PORT = 3000, () => {
-  const port = server.address().port
-  console.log('Node server listening on port', port)
-})
+const port = process.env.PORT || 3000
+const server = app.listen(port, () =>
+  console.log('Node server listening on port',
+    server.address().port)
+)
 
 module.exports = server

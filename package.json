@@ -18,7 +18,7 @@
         "require-dir": "^1.0.0"
     },
     "scripts": {
-        "app": "node index.js",
+        "start": "node index.js",
         "dev": "standard && nodemon index.js",
         "linter": "standard --fix"
     }

@@ -39,6 +39,8 @@ Go to project directory and run:
 yarn run app
 ```
 
+Browse `localhost:3000`.
+
 TODOs
 -----
 

@@ -1,0 +1,31 @@
+html
+    head
+        title Agendamento
+        link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
+        integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'
+        rel='stylesheet'
+        id='bootstrap-css'
+        crossorigin='anonymous')
+
+    body
+        .card.panel-default
+            .card-header
+                h3 Need a Doc - Agendamento
+            .card-header Escolha o horário da consulta
+            .card-body
+                form(action='/appointment/time' method='POST')
+                    .col-4.nopadding.form-group
+                        select.form-control(name='time')
+                            each d in times
+                                option(value=d)
+                                    =d
+
+                    input(type='hidden' name='name' value=name)
+                    input(type='hidden' name='email' value=email)
+                    input(type='hidden' name='phone' value=phone)
+                    input(type='hidden' name='date' value=date)
+
+                    .form-group
+                        button.btn.btn-primary(type='submit') Agendar
+
+            .card-footer

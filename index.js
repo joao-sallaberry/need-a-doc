@@ -14,13 +14,18 @@ app.set('view engine', 'pug')
 // app.use(express.static('./public'))
 
 // app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-  res.render('appointment', { title: 'Hey', message: 'Hello there!' })
+  res.redirect('/appointment')
 })
+
+app.route('/appointment')
+  .get(controllers.appointment.init.get)
+  .post(controllers.appointment.init.post)
+
+app.route('/appointment/time')
+  .post(controllers.appointment.time.post)
 
 app.route('/admin/config')
   .get(controllers.admin.config.get)

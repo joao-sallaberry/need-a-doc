@@ -1,6 +1,6 @@
 html
     head
-        title Test
+        title Configurações
         link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
              integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'
              rel='stylesheet'
@@ -60,7 +60,7 @@ html
 
 
         body
-            div.card.panel-default
+            .card.panel-default
                 .card-header
                     h3 Need a Doc - Administrador
                 .card-header Horários Disponíveis
@@ -76,25 +76,25 @@ html
                                         .form-group
                                             .input-group
                                                 select.form-control.weekday-select(name='weekday')
-                                                     each d in weekdays
-                                                         option(value=d)
+                                                     each d, index in weekdays
+                                                         option(value=index)
                                                              =d
 
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
                                                 select.form-control.start-time-select(name='startTime')
-                                                    each d in times
-                                                        option(value=d)
-                                                            =d
+                                                    each t in times
+                                                        option(value=t)
+                                                            =t
 
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
                                                 select.form-control.end-time-select(name='endTime')
-                                                    each d in times
-                                                        option(value=d)
-                                                            =d
+                                                    each t in times
+                                                        option(value=t)
+                                                            =t
 
                                     .input-group-btn
 

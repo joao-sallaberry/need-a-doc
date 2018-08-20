@@ -1,4 +1,5 @@
 const TimeSlot = require('../models/timeSlot')
+const dateTime = require('../utils/dateTime')
 
 module.exports = {
   config: {
@@ -12,11 +13,14 @@ module.exports = {
 
       // make list of slots
       const slots = []
+      const now = new Date()
       for (let i = 0; i < len; i++) {
         slots.push({
           weekday: weekday[i],
           startTime: startTime[i],
-          endTime: endTime[i]
+          endTime: endTime[i],
+          createdAt: now,
+          updatedAt: now
         })
       }
 
@@ -38,8 +42,8 @@ function renderConfigView (res, options = {}) {
     .then(slots => {
       res.render('admin/config', {
         timeSlots: slots,
-        weekdays: ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'],
-        times: getPossibleTimes(),
+        weekdays: dateTime.getWeekdays(),
+        times: dateTime.getPossibleTimes(),
         ...options
       })
     })
@@ -47,19 +51,4 @@ function renderConfigView (res, options = {}) {
       answer: {
         error: err, message: 'Erro ao obter horários'
       }}))
-}
-
-function getPossibleTimes () {
-  const asNumbers = []
-  for (let x = 0; x < 2400; x += 100) {
-    asNumbers.push(x)
-    asNumbers.push(x + 30)
-  }
-  return asNumbers.map(timeNumberToString)
-}
-
-function timeNumberToString (num) {
-  const hour = Math.floor(num / 100).toString().padStart(2, '0')
-  const minute = (num % 100).toString().padStart(2, '0')
-  return `${hour}:${minute}`
 }

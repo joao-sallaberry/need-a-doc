@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-// create a schema
 const timeSlotSchema = new Schema({
-  weekday: String,
+  weekday: Number,
   startTime: String,
   endTime: String,
-  created_at: Date,
-  updated_at: Date
+  createdAt: Date,
+  updatedAt: Date
 })
 
 timeSlotSchema.statics.findAll = () => {

@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 const Appointment = require('../models/appointment')
 const TimeSlot = require('../models/timeSlot')
 const dateTime = require('../utils/dateTime')
@@ -40,12 +42,15 @@ module.exports = {
         name,
         email,
         phone,
-        date: `${date} ${time}`,
+        date: new Date(`${date} ${time}`),
         createdAt: now,
         updatedAt: now
       })
       appointment.save()
-        .then(() => res.render('appointment/final', { message: 'Horário agendado com sucesso!' }))
+        .then(() => res.render('appointment/final', {
+          message: `Obrigado ${name}!
+          Sua consulta foi agendada para ${moment(appointment.date).format('DD/MM/YY HH:mm')}.`
+        }))
         .catch(err => {
           console.error(err)
           res.render('appointment/final', { message: 'Erro ao cadastrar agendamento', error: err })

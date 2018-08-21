@@ -7,7 +7,7 @@ const dateTime = require('../utils/dateTime')
 module.exports = {
   init: {
     get: (req, res) => {
-      res.render('appointment/init')
+      res.render('appointment/init', { minDate: moment().format('YYYY-MM-DD') })
     },
     post: (req, res) => {
       const date = new Date(req.body.date)

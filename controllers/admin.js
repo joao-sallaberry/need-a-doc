@@ -8,7 +8,6 @@ module.exports = {
       renderConfigView(res)
     },
     post: (req, res) => {
-      // TODO: validate
       const {weekday, startTime, endTime} = req.body
       const len = weekday.length
 
@@ -23,6 +22,17 @@ module.exports = {
           createdAt: now,
           updatedAt: now
         })
+      }
+
+      // validate startTime < endTime
+      for (let i = 0; i < slots.length; i++) {
+        if (startTime[i] >= endTime[i]) {
+          return renderConfigView(res, {
+            answer: {
+              error: 'ValidationError', message: 'Horário final deve ser maior que Horário Inicial'
+            }
+          })
+        }
       }
 
       // update database

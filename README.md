@@ -54,7 +54,6 @@ npm run linter
 TODOs
 -----
 
-- Check if start time is before end time on admin/config
 - Confirmation modal when leaving admin/config view with unsaved changes
 - Confirmation modal for sensitive actions
 - Backend validation before writing to DB

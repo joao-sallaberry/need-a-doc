@@ -15,16 +15,17 @@ module.exports = {
       TimeSlot.find({ weekday: date.getDay() })
         .then(slots => {
           slots.forEach(slot => {
-            times.add(dateTime.getPossibleTimes(
+            dateTime.getPossibleTimes(
               dateTime.timeStringToNumber(slot.startTime),
-              dateTime.timeStringToNumber(slot.endTime)))
+              dateTime.timeStringToNumber(slot.endTime))
+              .forEach(t => times.add(t))
           })
 
           // render view
           if (times.size === 0) {
             res.render('appointment/final', { message: 'Não há mais horários para esse dia' })
           } else {
-            res.render('appointment/time', { times: [...times][0], ...req.body })
+            res.render('appointment/time', { times: [...times], ...req.body })
           }
         })
         .catch(console.error)

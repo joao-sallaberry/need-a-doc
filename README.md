@@ -57,5 +57,3 @@ TODOs
 - Confirmation modal when leaving admin/config view with unsaved changes
 - Confirmation modal for sensitive actions
 - Backend validation before writing to DB
-- Frontend time check in admin/config
-- Access control on database

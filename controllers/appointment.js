@@ -10,7 +10,8 @@ module.exports = {
       res.render('appointment/init', { minDate: moment().format('YYYY-MM-DD') })
     },
     post: (req, res) => {
-      const date = new Date(req.body.date)
+      const momentDate = moment(req.body.date)
+      const date = momentDate.toDate()
       const times = new Set()
 
       // get possible times based on time slots configured
@@ -35,7 +36,6 @@ module.exports = {
         .then(appointments => {
           const timesUsed = appointments.map(a => moment(a.date).format('HH:mm'))
           timesUsed.forEach(t => times.delete(t))
-          console.log(times)
         })
         // render view
         .then(() => {

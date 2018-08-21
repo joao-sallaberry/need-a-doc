@@ -36,10 +36,20 @@ yarn
 Go to project directory and run:
 
 ```bash
-yarn run app
+npm run dev
 ```
 
 Browse `localhost:3000`.
+
+Changes on the source code will trigger an application restart.
+
+### Check code style
+
+Go to project directory and run:
+
+```bash
+npm run linter
+```
 
 TODOs
 -----

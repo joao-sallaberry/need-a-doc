@@ -9,7 +9,7 @@ module.exports = {
     },
     post: (req, res) => {
       const {weekday, startTime, endTime} = req.body
-      const len = weekday.length
+      const len = weekday === undefined ? 0 : weekday.length
 
       // make list of slots
       const slots = []

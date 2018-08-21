@@ -93,7 +93,7 @@ html
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
-                                                select.form-control.weekday-select(name='weekday' disabled)
+                                                select.form-control.weekday-select(name='weekday[]' disabled)
                                                      each d, index in weekdays
                                                          option(value=index)
                                                              =d
@@ -101,7 +101,7 @@ html
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
-                                                select.form-control.start-time-select(name='startTime' disabled)
+                                                select.form-control.start-time-select(name='startTime[]' disabled)
                                                     each t in times
                                                         option(value=t)
                                                             =t
@@ -109,7 +109,7 @@ html
                                     .col-sm-3.nopadding
                                         .form-group
                                             .input-group
-                                                select.form-control.end-time-select(name='endTime' disabled)
+                                                select.form-control.end-time-select(name='endTime[]' disabled)
                                                     each t in times
                                                         option(value=t)
                                                             =t

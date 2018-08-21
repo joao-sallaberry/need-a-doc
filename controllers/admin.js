@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 const TimeSlot = require('../models/timeSlot')
 const Appointment = require('../models/appointment')
 const dateTime = require('../utils/dateTime')
@@ -52,6 +54,10 @@ module.exports = {
       Appointment.find({})
         .then(appointments => {
           appointments = appointments.sort((a, b) => a.date - b.date) // sort by date
+          appointments = appointments.map(app => {
+            app.dateFormat = moment(app.date).format('DD/MM/YYYY - HH:mm')
+            return app
+          })
           res.render('admin/timetable', { appointments })
         })
     }

@@ -45,7 +45,6 @@ TODOs
 -----
 
 - Check if start time is before end time on admin/config
-- Forbid 2 appointments at the same time when making an appointment
 - Confirmation modal when leaving admin/config view with unsaved changes
 - Confirmation modal for sensitive actions
 - Backend validation before writing to DB

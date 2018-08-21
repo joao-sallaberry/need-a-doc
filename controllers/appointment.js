@@ -22,20 +22,37 @@ module.exports = {
               dateTime.timeStringToNumber(slot.endTime))
               .forEach(t => times.add(t))
           })
-
-          // render view
+        })
+        // get same day appointments
+        .then(() => {
+          const nextDay = new Date(date)
+          nextDay.setDate(date.getDate() + 1)
+          return Appointment.find({
+            date: { $gte: date, $lt: nextDay }
+          })
+        })
+        // remove times already used
+        .then(appointments => {
+          const timesUsed = appointments.map(a => moment(a.date).format('HH:mm'))
+          timesUsed.forEach(t => times.delete(t))
+          console.log(times)
+        })
+        // render view
+        .then(() => {
           if (times.size === 0) {
             res.render('appointment/final', { message: 'Não há mais horários para esse dia' })
           } else {
             res.render('appointment/time', { times: [...times], ...req.body })
           }
         })
-        .catch(console.error)
+        .catch(err => {
+          console.error(err)
+          res.render('appointment/final', { message: 'Erro ao exibir horários', error: err })
+        })
     }
   },
   time: {
     post: (req, res) => {
-      console.log(req.body)
       const { name, email, phone, date, time } = req.body
       const now = new Date()
       const appointment = new Appointment({
